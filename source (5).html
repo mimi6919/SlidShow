@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="cache-control" content="no-cache"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="-1"><style type="text/css">body {
+  text-align : center;
+}
+.main img {
+  width : 70%;
+  vertical-align: middle;
+}
+.navi {
+  text-align: center;
+}
+button {
+  margin: 10px auto;
+  font-size: 24px;
+}
+.title {
+  font-size: xx-large;
+}
+.thumbnails .selected {
+  opacity: 1.0;
+}
+</style>
+
+  
+
+    <meta charset="utf-8">
+    <title>スライドショー</title>
+    <link rel="stylesheet" href="https://fontawesome.com/">
+  
+  
+  
+</head>
+
+<body>
+    <div class="title">
+        猫スライドショー
+    </div>
+    <div class="main">
+        <button type="button" onclick="left()">
+            &lt;</button> <img src="https://kurokuro.jp/blog/wp-content/uploads/2021/11/2021112901.jpeg">
+                <button type="button" onclick="right()">&gt;</button>
+
+    </div>
+    <div class="control">
+        <button onclick="play()">再生</button>
+        <button onclick="stop()">停止</button>
+        <button onclick="reset()">リセット</button>
+
+    </div>
+    <script src="js/slidShow.js"></script>
+         
+
+
+
+<script>let count = 0;
+const mainElement = document.querySelector("div.main>img");
+const url = [
+   "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/A_cat_on_a_motorcycle_in_the_medina_of_Tunis_20171017_131525.jpg/1200px-A_cat_on_a_motorcycle_in_the_medina_of_Tunis_20171017_131525.jpg",
+  "https://img.benesse-cms.jp/pet-cat/item/image/normal/3315437f-8cd9-4741-acc7-19c550e92bde.jpg?w=1120&h=1120&resize_type=cover&resize_mode=force",
+  "https://i.kobe-np.co.jp/rentoku/omoshiro/202112/img/d_14902568.jpg"
+  
+];
+
+function left() {
+    // console.log(count);
+    count--;
+    if (count <= 0) {
+        count = url.length - 1;
+    }
+    mainElement.setAttribute('src', url[count]);
+}
+
+function right() {
+    count++;
+    if (count >= url.length) {
+        count = 0;
+    }
+    mainElement.setAttribute('src', url[count]);
+}
+
+let timer;
+let nowPlaying = false;
+
+function autoPlay() {
+    right();
+    timer = setTimeout(function() {
+        autoPlay();
+    }, 200);
+}
+
+function play() {
+    if (nowPlaying) {
+        return;
+    }
+    nowPlaying = true;
+    autoPlay();
+}
+
+function stop() {
+    clearTimeout(timer);
+    nowPlaying = false;
+}
+
+function reset() {
+    stop();
+    mainElement.setAttribute('src', url[0]);
+    count = 0;
+}</script></body>
